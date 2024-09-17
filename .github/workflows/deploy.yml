@@ -1,31 +1,23 @@
-name: Deploy Vite App
+name: Build and deploy to GitHub Pages
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2.3.1
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18' # İhtiyacınıza göre Node.js sürümünü belirleyin
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build
-        run: npm run build
-
-      - name: Deploy
+      - name: Install and build 🔧
         run: |
-          # Buraya deploy komutlarınızı ekleyin
-          # Örneğin, bir FTP sunucusuna veya başka bir platforma dağıtım yapabilirsiniz
-          echo "Deploying the app..."
+          npm install
+          npm run build
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.0
+        with:
+          branch: gh-pages
+          folder: dist
